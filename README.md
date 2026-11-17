@@ -1,10 +1,20 @@
 # Agentes de IA con Python
 
-Documentación de la aplicación. Amplía este README, situado junto a `main.py`,
-con las decisiones, los ejemplos y la reflexión del proyecto.
+Aplicación de consola que genera una guía de estudio en Markdown sobre un tema
+de Python indicado por la persona usuaria. Tres agentes construidos con ADK y
+Gemini colaboran en secuencia:
 
-La imagen creó estos archivos con `iniciar-proyecto`. Consulta la
-[guía de trabajo con Docker y VS Code](docs/trabajar-con-docker.md).
+1. **Explicador** (`agentes/explicador.py`): explica el tema con un ejemplo breve.
+2. **Diseñador de práctica** (`agentes/disenador_practica.py`): propone un ejercicio corto.
+3. **Revisor** (`agentes/revisor.py`): comprueba la coherencia y entrega la guía final.
+
+`main.py` coordina el flujo, y `herramientas/` valida el resultado y lo guarda
+de forma segura en `salida/`. Un modo simulado permite probar todo sin consumir
+API. En `ejemplos/guia_ejemplo.md` hay un ejemplo del resultado esperado.
+
+La imagen creó estos archivos con `iniciar-proyecto`. La
+[guía de trabajo con Docker y VS Code](docs/trabajar-con-docker.md) explica el
+flujo de trabajo y la conexión opcional de VS Code al contenedor.
 
 ## Antes de comenzar
 
@@ -46,6 +56,21 @@ usando el mismo comando Docker y sin el filtro `-k`.
 Las pruebas de agentes, archivos, validación y flujo fallan al comienzo porque
 corresponden al trabajo que debes completar. Las pruebas de entorno y runtime
 deben pasar desde el primer momento.
+
+### Opción: VS Code dentro del contenedor
+
+Abre la carpeta en VS Code con la extensión **Dev Containers** y selecciona
+**Dev Containers: Reopen in Container**. En la terminal conectada de VS Code
+se ejecutan directamente los comandos Python, sin el prefijo `docker run ...`:
+
+```bash
+python -m runtime.diagnostico --sin-api
+python -m pytest -q pruebas/test_entorno.py pruebas/test_runtime.py
+```
+
+Los comandos Git se siguen ejecutando en la terminal local. Si cambias `.env`,
+consulta en la [guía](docs/trabajar-con-docker.md#vs-code-dentro-del-contenedor-opcional)
+cómo recargar la configuración del contenedor.
 
 ## Configuración segura de Gemini
 
